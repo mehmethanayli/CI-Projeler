@@ -6,6 +6,8 @@ class SubmitForm extends CI_Controller
     public function __construct()
     {
         parent::__construct();
+        $this->load->model("Submit_Form_Model");
+
     }
 
     public function index()
@@ -31,18 +33,41 @@ class SubmitForm extends CI_Controller
 
     public function insert()
     {
-        $this->load->model("todo_model");
 
-        $todo_description = $this->input->post("todo_description");
+        //echo "Form Kayıt İşlemi";
+        //Form Verileri
+        $isim           = $this->input->get("isim");
+        $email          = $this->input->get("email");
+        $kullaniciAdi   = $this->input->get("kullaniciAdi");
+        $parola         = $this->input->get("parola");
+        $adres          = $this->input->get("adres");
+        $sehir          = $this->input->get("sehir");
+        $ilce           = $this->input->get("ilce");
+        $mahalle        = $this->input->get("mahalle");
+        $kartNumarasi   = $this->input->get("kartNumarasi");
+        $kartIsim       = $this->input->get("kartIsim");
+        $cvv            = $this->input->get("cvv");
+        $gsm            = $this->input->get("gsm");
 
-        $insert = $this->todo_model->insert(array(
-            "description" => $todo_description,
-            "complatedAt" => 0,
-            "createdAt"  => date("Y-m-d H:i:s")
-        ));
+        $data = [
+            "isim"           => $isim,
+            "email"          => $email,
+            "kullaniciAdi"   => $kullaniciAdi,
+            "parola"         => $parola,
+            "adres"          => $adres,
+            "sehir"          => $sehir,
+            "ilce"           => $ilce,
+            "mahalle"        => $mahalle,
+            "kartNumarasi"   => $kartNumarasi,
+            "kartIsim"       => $kartIsim,
+            "cvv"            => $cvv,
+            "gsm"            => $gsm
+        ];
+        $insert = $this->Submit_Form_Model->insert($data);
 
         if ($insert) {
-            redirect(base_url());
+
+            echo "Kayıt İşlemi Başarılı";
         }
     }
 
